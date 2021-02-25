@@ -5,10 +5,10 @@ import (
 	"log"
 	"os"
 
-	diskfs "github.com/diskfs/go-diskfs"
-	"github.com/diskfs/go-diskfs/disk"
-	"github.com/diskfs/go-diskfs/filesystem"
-	"github.com/diskfs/go-diskfs/filesystem/iso9660"
+	diskfs "github.com/x-clone/go-diskfs"
+	"github.com/x-clone/go-diskfs/disk"
+	"github.com/x-clone/go-diskfs/filesystem"
+	"github.com/x-clone/go-diskfs/filesystem/iso9660"
 )
 
 func CreateBootableIso(diskImg string) {
@@ -40,7 +40,7 @@ func CreateBootableIso(diskImg string) {
 	// isolinux/ldlinux.c32, images/efiboot.img already loaded in the files to
 	// be added to the iso.
 	//
-	// For a full working example, see https://github.com/diskfs/isotester
+	// For a full working example, see https://github.com/x-clone/isotester
 	options := iso9660.FinalizeOptions{
 		VolumeIdentifier: "my-volume",
 		ElTorito: &iso9660.ElTorito{

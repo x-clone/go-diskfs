@@ -13,8 +13,8 @@ import (
 	"strings"
 	"testing"
 
-	. "github.com/diskfs/go-diskfs/partition/gpt"
-	"github.com/diskfs/go-diskfs/testhelper"
+	. "github.com/x-clone/go-diskfs/partition/gpt"
+	"github.com/x-clone/go-diskfs/testhelper"
 )
 
 const (

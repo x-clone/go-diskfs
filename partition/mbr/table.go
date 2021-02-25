@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/diskfs/go-diskfs/partition/part"
-	"github.com/diskfs/go-diskfs/util"
+	"github.com/x-clone/go-diskfs/partition/part"
+	"github.com/x-clone/go-diskfs/util"
 )
 
 // Table represents an MBR partition table to be applied to a disk or read from a disk
