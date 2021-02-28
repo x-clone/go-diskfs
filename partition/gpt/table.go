@@ -7,9 +7,9 @@ import (
 	"hash/crc32"
 	"strings"
 
+	uuid "github.com/google/uuid"
 	"github.com/x-clone/go-diskfs/partition/part"
 	"github.com/x-clone/go-diskfs/util"
-	uuid "github.com/google/uuid"
 )
 
 // gptSize max potential size for partition array reserved 16384
@@ -440,9 +440,13 @@ func (t *Table) Write(f util.File, size int64) error {
 	var written int
 	var err error
 	if t.ProtectiveMBR {
+		buf := make([]byte, 512)
+		f.ReadAt(buf, 0)
+
 		fullMBR := t.generateProtectiveMBR()
-		protectiveMBR := fullMBR[mbrPartitionEntriesStart:]
-		written, err = f.WriteAt(protectiveMBR, mbrPartitionEntriesStart)
+		protectiveMBR := append(buf[:mbrPartitionEntriesStart], fullMBR[mbrPartitionEntriesStart:]...)
+
+		written, err = f.WriteAt(protectiveMBR, 0)
 		if err != nil {
 			return fmt.Errorf("Error writing protective MBR to disk: %v", err)
 		}

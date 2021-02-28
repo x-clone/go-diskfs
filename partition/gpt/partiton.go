@@ -8,8 +8,8 @@ import (
 	"strings"
 	"unicode/utf16"
 
-	"github.com/x-clone/go-diskfs/util"
 	uuid "github.com/google/uuid"
+	"github.com/x-clone/go-diskfs/util"
 )
 
 // PartitionEntrySize fixed size of a GPT partition entry
@@ -163,7 +163,7 @@ func (p *Partition) WriteContents(f util.File, contents io.Reader) (uint64, erro
 	start := p.Start * uint64(lss)
 	// loop in physical sector sizes
 	for {
-		read, err := contents.Read(b)
+		read, err := io.ReadAtLeast(contents, b, len(b))
 		if err != nil && err != io.EOF {
 			return total, fmt.Errorf("Could not read contents to pass to partition: %v", err)
 		}
@@ -173,7 +173,7 @@ func (p *Partition) WriteContents(f util.File, contents io.Reader) (uint64, erro
 		}
 		if read > 0 {
 			var written int
-			written, err = f.WriteAt(b[:read], int64(start+total))
+			written, err = f.WriteAt(b, int64(start+total))
 			if err != nil {
 				return total, fmt.Errorf("Error writing to file: %v", err)
 			}
